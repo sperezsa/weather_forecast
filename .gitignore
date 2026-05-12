@@ -1,0 +1,16 @@
+**/__pycache__/
+*.pyc
+
+# --- Seguridad y Entorno ---
+.env
+.venv/
+
+# --- Python (Basura de ejecución) ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+
+# --- Específico de UV ---
+# No ignorar uv.lock, para asegurar versiones
