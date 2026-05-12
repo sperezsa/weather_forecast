@@ -4,7 +4,7 @@
 # --- Seguridad y Entorno ---
 .env
 .venv/
-.db
+*.db
 
 # --- Python (Basura de ejecución) ---
 __pycache__/
