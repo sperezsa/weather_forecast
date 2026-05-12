@@ -14,4 +14,4 @@ __pycache__/
 .mypy_cache/
 
 # --- Específico de UV ---
-# No ignorar uv.lock, para asegurar versiones
+# No ignorar uv.lock, para asegurar versionesweather.db
