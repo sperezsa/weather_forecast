@@ -3,9 +3,7 @@ import urllib.parse
 import json
 import sqlite3
 from datetime import date, timedelta
-
 import pandas as pd
-
 
 # ---------------------------------------------------------------------------
 # Configuración de ubicaciones
@@ -243,7 +241,30 @@ def mostrar_prevision(df: pd.DataFrame) -> None:
               f"{row['amanecer']}  /  {row['atardecer']}")
         print()
 
+# ---------------------------------------------------------------------------
+# Recuperar datos de la bbdd
+# ---------------------------------------------------------------------------
+def obtener_datos_clima(db_path: str = DB_PATH) -> pd.DataFrame:
+    """
+    Se conecta a la base de datos local y devuelve un DataFrame 
+    con las ciudades y sus temperaturas.
+    """
+    
+    try:
+        # Conectamos a la base de datos
+        with sqlite3.connect(db_path) as conn:
+            # Query para extraer los datos (ajusta 'nombre_tabla' a la tuya)
+            query = "SELECT ciudad, fecha, dia_semana, temp_max_c, temp_min_c, precipitacion_mm, prob_lluvia_pct, estado, fecha_carga  FROM prevision_semanal"
 
+
+            # Pandas lee el SQL y crea el DataFrame automáticamente
+            df = pd.read_sql_query(query, conn)
+            return df
+            
+    except Exception as e:
+        print(f"Error al leer la base de datos: {e}")
+        return pd.DataFrame() # Devuelve un DF vacío si hay error
+    
 # ---------------------------------------------------------------------------
 # Punto de entrada
 # ---------------------------------------------------------------------------
@@ -268,6 +289,9 @@ if __name__ == "__main__":
         mostrar_prevision(df_ciudad)
         guardar_en_sqlite(df_ciudad)
         frames.append(df_ciudad)
+        #nuevo = obtener_datos_clima(DB_PATH)
+
+
 
     # DataFrame consolidado con todas las ubicaciones
     if frames:
